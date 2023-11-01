@@ -8,7 +8,7 @@ const Produto = require('./models/Produto')
 const Cliente = require('./models/Cliente')
 const Estoque = require('./models/Estoque')
 const Pedido = require('./models/Pedido')
-const Venda = require('./models/Venda')
+const VendaRoutes = require('./routes/VendaRoutes')
 
 const app = express()
 
@@ -56,31 +56,6 @@ app.post('/produto/criar', async (req, res) => {
   res.json(produto)
 })
 
-app.post('/venda/criar', async (req, res) => {
-  const { data, total, ClienteId, ProdutoId } = req.body
-
-  if (!data || !total || !ClienteId || !ProdutoId) {
-    return res
-      .status(400)
-      .json({ message: 'Data, total, ClienteId e ProdutoId são obrigatórios' })
-  }
-
-  const estoque = await Estoque.findOne({ where: { ProdutoId } })
-
-  if (estoque.dataValues.quantidade < 1) {
-    res.status(400).json({ message: 'Produto sem estoque' })
-  }
-
-  const venda = await Venda.create({ data, total, ClienteId, ProdutoId })
-
-  await Estoque.update(
-    { quantidade: estoque.dataValues.quantidade - 1 },
-    { where: { ProdutoId } }
-  )
-
-  res.json(venda)
-})
-
 app.post('/pedido/criar', async (req, res) => {
   const { data, status, VendaId } = req.body
 
@@ -115,6 +90,9 @@ app.get('/estoque/listar', async (req, res) => {
 
   res.json(estoques)
 })
+
+// Routes
+app.use('/venda', VendaRoutes)
 
 conn
   .sync()
