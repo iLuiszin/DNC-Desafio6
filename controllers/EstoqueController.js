@@ -1,4 +1,5 @@
 const Estoque = require('../models/Estoque')
+const Produto = require('../models/Produto')
 
 module.exports = class EstoqueController {
   static async listar(req, res) {

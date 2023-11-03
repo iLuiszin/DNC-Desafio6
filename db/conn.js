@@ -1,9 +1,15 @@
 const { Sequelize } = require('sequelize')
+require('dotenv').config()
 
-const sequelize = new Sequelize('projeto6dnc', 'luis', 'luis', {
-  host: 'localhost',
-  dialect: 'mysql',
-})
+const sequelize = new Sequelize(
+  process.env.DATABASE,
+  process.env.USER,
+  process.env.PASSWORD,
+  {
+    host: 'localhost',
+    dialect: 'mysql',
+  }
+)
 
 try {
   sequelize.authenticate()

@@ -1,6 +1,5 @@
 const { DataTypes } = require('sequelize')
 const db = require('../db/conn')
-const Produto = require('./Produto')
 
 const Estoque = db.define('Estoque', {
   quantidade: {

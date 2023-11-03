@@ -10,6 +10,8 @@ const EstoqueRoutes = require('./routes/EstoqueRoutes')
 const PedidoRoutes = require('./routes/PedidoRoutes')
 const VendaRoutes = require('./routes/VendaRoutes')
 
+require('dotenv').config()
+
 const app = express()
 
 app.use(logger('dev'))
